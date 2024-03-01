@@ -3,5 +3,5 @@ from .views import users_set
 
 urlpatterns = [
         
-    path('employee/',users_set,name='list_users'),
+    path('',users_set,name='list_users'),
 ]
