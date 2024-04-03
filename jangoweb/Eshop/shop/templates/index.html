@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% load cart %}
+
+<!--body-->
+<div class="container-fluid text-center mt-3">
+  <div class="row">
+    <!-- filter -->
+
+    <div class="col-lg-3 max-auto">
+      <!-- Hover added -->
+      <div class="list-group">
+
+        <a href="/" class="list-group-item list-group-item-action ">All Products</a>
+
+        {% for category in categories %}
+        <a href="/?category={{category.id}}" class="list-group-item list-group-item-action ">{{category.name}}</a>
+        {% endfor %}
+      </div>
+
+    </div>
+
+
+
+    <!-- All Products -->
+    <div id="products " class="col-lg-9 container-fluid">
+      <div class="row w-100">
+        <div class="col-sm-4 mb-3 mb-sm-0 d-flex flex-wrap overflow-auto w-100">
+        {% for product in products %}
+        
+          <div class="card max-auto mb-3" style="width: 16rem">
+            <img src=" {{product.image.url}}" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">{{product.name}}</h5>
+              <p class="card-text">{{product.price}}</p>
+              {% if product|is_in_cart:request.session.cart %}
+              {% csrf_token %}
+              <form action="/" method="POST">
+                <input hidden type="text" name="product" value="{{product.id}}">
+                <input  type="submit" href="#" class="btn btn-light border btn-sm" value="Add to cart">
+
+
+              </form>
+              {% endif %}
+            </div>
+            
+            <div class="cart-footer  p-0 row no-gutter">
+              <input type="submit" name="" id="" value="-" class="col-sm-4 btn btn-block btn-secondary ">
+              <div class="text-center col"> 2 in cart</div>
+              <input type="submit" name="" id="" value="+" class="col-sm-4 btn btn-block btn-secondary ">
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <table>
+        <tr>
+            <td>{{products.name}}</td>
+            <td>{{products.category}}</td>
+            <td>{{products.price}}</td>
+            <td>{{products.description}}</td>
+            <td>{{products.image}}</td>
+        </tr>
+    </table> -->
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+  integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+
+</html>
+{% endblock %}
